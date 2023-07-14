@@ -20,11 +20,16 @@ jobs:
 
     strategy:
       matrix:
-        go-version: [1.17.13]
-        os: [ubuntu-18.04, macos-12, windows-2019]
+        os: [ubuntu-20.04, macos-12, windows-2019]
 
     steps:
-      - uses: actions/setup-go@v2
+      - name: Install dependencies
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libbtrfs-dev
+
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
 
@@ -40,7 +45,7 @@ jobs:
   #
   project:
     name: Project Checks
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     timeout-minutes: 5
 
     steps:
@@ -68,7 +73,7 @@ jobs:
   #
   protos:
     name: Protobuf
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     timeout-minutes: 5
 
     defaults:
@@ -104,7 +109,7 @@ jobs:
 
   man:
     name: Manpages
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     timeout-minutes: 5
 
     steps:
@@ -221,11 +226,16 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-12, windows-2019, windows-2022]
-        go-version: ['1.16.15', '1.17.13']
-
+        os: [ubuntu-20.04, macos-12, windows-2019, windows-2022]
+        go-version: ["1.19.2", "1.18.7"]
     steps:
-      - uses: actions/setup-go@v2
+      - name: Install dependencies
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libbtrfs-dev
+
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
 
@@ -339,7 +349,7 @@ jobs:
 
   integration-linux:
     name: Linux Integration
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     timeout-minutes: 40
     needs: [project, linters, protos, man]
 
@@ -368,11 +378,12 @@ jobs:
           RUNC_FLAVOR: ${{ matrix.runc }}
           GOFLAGS: -modcacherw
         run: |
-          sudo apt-get install -y gperf
-          sudo -E PATH=$PATH script/setup/install-seccomp
-          sudo -E PATH=$PATH script/setup/install-runc
-          sudo -E PATH=$PATH script/setup/install-cni $(grep containernetworking/plugins go.mod | awk '{print $2}')
-          sudo -E PATH=$PATH script/setup/install-critools
+          sudo apt-get install -y gperf libbtrfs-dev
+          script/setup/install-seccomp
+          script/setup/install-runc
+          script/setup/install-cni $(grep containernetworking/plugins go.mod | awk '{print $2}')
+          script/setup/install-critools
+          script/setup/install-failpoint-binaries
 
       - name: Install criu
         run: |
