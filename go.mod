@@ -3,11 +3,11 @@ module github.com/containerd/containerd
 go 1.19
 
 require (
-	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230106234847-43070de90fa1
+	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230811130428-ced1acdcaa24
 	github.com/AdamKorcz/go-118-fuzz-build v0.0.0-20221215162035-5330a85ea652
 	github.com/Microsoft/go-winio v0.6.0
 	github.com/Microsoft/hcsshim v0.10.0-rc.7
-	github.com/container-orchestrated-devices/container-device-interface v0.5.4
+	github.com/container-orchestrated-devices/container-device-interface v0.6.0
 	github.com/containerd/aufs v1.0.0
 	github.com/containerd/btrfs/v2 v2.0.0
 	github.com/containerd/cgroups/v3 v3.0.1
@@ -144,5 +144,3 @@ require (
 )
 
 replace github.com/opencontainers/runtime-tools => github.com/opencontainers/runtime-tools v0.0.0-20221026201742-946c877fa809
-
-replace github.com/AdaLogics/go-fuzz-headers => github.com/AdamKorcz/go-fuzz-headers-1 v0.0.0-20230111232327-1f10f66a31bf
