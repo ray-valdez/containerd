@@ -50,7 +50,7 @@ type shimTaskManager struct {
 
 // shimLog is logger for shim package
 var shimLog = logrus.WithFields(logrus.Fields{
-	"source": "containerd-kata-shim-v2",
+	"source": "containerd-split-shim-v2",
 	"name":   "containerd-shim-v2",
 })
 
