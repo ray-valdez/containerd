@@ -17,7 +17,7 @@
    limitations under the License.
 */
 
-package split
+package containerdShim
 
 import (
 	"context"

@@ -24,7 +24,7 @@ import (
 	"os"
 
 	"github.com/containerd/containerd/runtime/v2/shim"
-	split "github.com/containerd/containerd/runtime/v2/split/pkg"
+	split "github.com/containerd/containerd/runtime/v2/split/pkg/containerd-shim-v2"
 )
 
 // name of the project tags
